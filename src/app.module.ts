@@ -13,7 +13,7 @@ import { UserModule } from './user/user.module';
       isGlobal: true,
       envFilePath: '.env',
     }),
-   PrismaModule
+   PrismaModule,UserModule
   ],
   controllers: [AppController],
   providers: [AppService],
