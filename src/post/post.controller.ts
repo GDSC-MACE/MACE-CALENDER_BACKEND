@@ -19,25 +19,23 @@ export class PostController {
   @UseGuards(AuthenticatedGuard)
   @Post('createPost')
   async createPost(@Body() dto: any, @Req() req) {
-     const user = req.user;
+    const user = req.user;
     return this.postService.createPost(dto, user.id);
   }
   @UseGuards(AuthenticatedGuard)
   @Delete(':id')
   async deletePost(@Param('id', ParseIntPipe) postId: number, @Req() req) {
-     const user = req.user;
+    const user = req.user;
     return this.postService.deletePost(postId, user.id);
   }
 
-  @Get("allposts")
-  async fetchallposts()
-  {
+  @Get('allposts')
+  async fetchallposts() {
     return this.postService.fetchAllPosts();
   }
 
-  @Get("uniqueposts/:id")
-  async fetchuniqueposts(@Param('id', ParseIntPipe) id:number)
-  {
-    return this.postService.fetchUniquePost(id)
+  @Get('uniqueposts/:id')
+  async fetchuniqueposts(@Param('id', ParseIntPipe) id: number) {
+    return this.postService.fetchUniquePost(id);
   }
 }

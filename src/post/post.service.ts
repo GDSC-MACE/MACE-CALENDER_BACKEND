@@ -15,7 +15,15 @@ export class PostService {
       data: {
         event_name: dto.name,
         description: dto.description,
+        event_date: dto.date,
+        image_url: dto.image,
         userId: id,
+        contact_info: {
+          create: dto.contacts,
+        },
+      },
+      include: {
+        contact_info: true,
       },
     });
   }
@@ -40,43 +48,42 @@ export class PostService {
     });
   }
 
-  async fetchAllPosts()
-  {
-    try{
-      const posts=await this.prisma.post.findMany( )
-      if(!posts)
+  async fetchAllPosts() {
+    try {
+      const posts = await this.prisma.post.findMany({
+        include: {
+          contact_info: true,
+        },
+      });
+      if (!posts || posts.length === 0)
+        throw new HttpException('no posts available', HttpStatus.I_AM_A_TEAPOT);
+      return posts;
+    } catch (err) {
       throw new HttpException(
-        'no posts available',
-        HttpStatus.I_AM_A_TEAPOT,
+        `error i dont know but server gave :( ${err}`,
+        HttpStatus.AMBIGUOUS,
       );
-      return posts
     }
-   catch(err)
-   {
-    throw new HttpException(`error i dont know but server gave :( ${err}`,HttpStatus.AMBIGUOUS)
-   }
   }
 
-  async fetchUniquePost(id:number)
-  {
-    try{
-      const posts=await this.prisma.post.findMany( 
-        {
-          where:{
-            userId:id
-          }
-        }
-      )
-      if(posts.length==0)
+  async fetchUniquePost(id: number) {
+    try {
+      const posts = await this.prisma.post.findMany({
+        where: {
+          userId: id,
+        },
+        include: {
+          contact_info: true,
+        },
+      });
+      if (posts.length === 0)
+        throw new HttpException('no posts available', HttpStatus.I_AM_A_TEAPOT);
+      return posts;
+    } catch (err) {
       throw new HttpException(
-        'no posts available',
-        HttpStatus.I_AM_A_TEAPOT,
+        `error i dont know but server gave :( ${err}`,
+        HttpStatus.AMBIGUOUS,
       );
-      return posts
     }
-   catch(err)
-   {
-    throw new HttpException(`error i dont know but server gave :( ${err}`,HttpStatus.AMBIGUOUS)
-   }
   }
 }
