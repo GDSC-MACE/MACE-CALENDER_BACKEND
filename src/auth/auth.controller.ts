@@ -12,10 +12,4 @@ export class AuthController {
   login(@Request() req): any {
     return { message: 'login success!!!!',user:req.user };
   }
-
-  @UseGuards(AuthenticatedGuard)
-  @Get('protected')
-  getHello(@Request() req): any {
-    return {user:req.user};
-  }
 }
