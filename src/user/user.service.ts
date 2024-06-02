@@ -24,7 +24,7 @@ export class UserService {
   async signup(dto: UserDto) {
     const hash = await bcrypt.hash(
       dto.password,
-      process.env.BCRYPT_SALT_ROUNDS,
+      Number(process.env.BCRYPT_SALT_ROUNDS),
     );
     try {
       const user = await this.prisma.user.create({
