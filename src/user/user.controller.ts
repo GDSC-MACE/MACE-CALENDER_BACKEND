@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Body, Controller, Post } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common/decorators/core/use-guards.decorator';
 import { Req } from '@nestjs/common/decorators/http/route-params.decorator';
@@ -11,8 +12,8 @@ import { UserService } from './user.service';
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
-  
-  @UseGuards(AuthenticatedGuard,RolesGuard)
+
+  @UseGuards(AuthenticatedGuard, RolesGuard)
   @Roles(Role.Admin)
   @Post('signup')
   signup(@Body() dto: UserDto, @Req() req) {

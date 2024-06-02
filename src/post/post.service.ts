@@ -6,11 +6,12 @@ import {
 } from '@nestjs/common';
 import { HttpStatus } from '@nestjs/common/enums';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { PostDto } from './dto';
 
 @Injectable()
 export class PostService {
   constructor(private readonly prisma: PrismaService) {}
-  async createPost(dto: any, id: number) {
+  async createPost(dto: PostDto, id: number) {
     return this.prisma.post.create({
       data: {
         event_name: dto.name,
