@@ -1,4 +1,12 @@
-import { Controller, Get, UseGuards, Post, Request,Session,Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  UseGuards,
+  Post,
+  Request,
+  Session,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthenticatedGuard } from './Guards/authenticated.guard';
 import { LocalAuthGuard } from './Guards/local-auth.guard';
@@ -11,16 +19,12 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   login(@Request() req): any {
-    return { message: 'login success!!!!',user:req.user };
+    return { message: 'login success!!!!', user: req.user };
   }
 
-
-  @UseGuards(AuthenticatedGuard) 
-  @Get('logout') 
-  logout(
-    @Session() session: Record<string, any>,
-    @Res() res: Response,
-  ) {
+  @UseGuards(AuthenticatedGuard)
+  @Get('logout')
+  logout(@Session() session: Record<string, any>, @Res() res: Response) {
     console.log(session.id);
     session.destroy((err) => {
       if (err) {

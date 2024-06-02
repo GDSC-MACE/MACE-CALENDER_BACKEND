@@ -2,7 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UserDto } from './dto';
-// import { UserDto } from './dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -22,7 +22,10 @@ export class UserService {
   }
 
   async signup(dto: UserDto) {
-    const hash = dto.password.toString();
+    const hash = await bcrypt.hash(
+      dto.password,
+      process.env.BCRYPT_SALT_ROUNDS,
+    );
     try {
       const user = await this.prisma.user.create({
         data: {
