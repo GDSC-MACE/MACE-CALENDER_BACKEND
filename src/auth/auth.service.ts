@@ -13,6 +13,5 @@ export class AuthService {
       const { password, ...rest } = user;
       return rest;
     }
-    console.log('hello');
   }
 }
