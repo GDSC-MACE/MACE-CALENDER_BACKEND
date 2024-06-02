@@ -1,6 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { UserDto } from './dto';
 // import { UserDto } from './dto';
 
 @Injectable()
@@ -13,22 +14,30 @@ export class UserService {
           email,
         },
       });
+      console.log(`user in fetch user is ${user}`)
+      if(user)
       return user;
+      else
+      throw new HttpException("no user found",HttpStatus.I_AM_A_TEAPOT)
     } catch (error) {
       throw new HttpException(error, HttpStatus.I_AM_A_TEAPOT);
     }
   }
 
-  async signup(dto: any) {
-    const hash = await dto.password.toString();
+  async signup(dto: UserDto) {
+    console.log(`dto is ${dto}`)
+    const hash =dto.password.toString();
+    console.log("hello")
+    console.log(`dto is ${dto}`)
     try {
       const user = await this.prisma.user.create({
         data: {
           name: dto.name,
-          email: dto.email,
+          email: dto.username,
           password: hash,
         },
       });
+      console.log(`created user is ${user}`)
       delete user.password;
       return user;
     } catch (error) {
