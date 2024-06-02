@@ -11,6 +11,7 @@ import {
 import { UseGuards } from '@nestjs/common/decorators';
 import { AuthenticatedGuard } from 'src/auth/Guards/authenticated.guard';
 import { PostService } from './post.service';
+import { PostDto } from './dto';
 
 @Controller('post')
 export class PostController {
@@ -18,7 +19,7 @@ export class PostController {
 
   @UseGuards(AuthenticatedGuard)
   @Post('createPost')
-  async createPost(@Body() dto: any, @Req() req) {
+  async createPost(@Body() dto: PostDto, @Req() req) {
     const user = req.user;
     return this.postService.createPost(dto, user.id);
   }

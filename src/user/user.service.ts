@@ -14,21 +14,15 @@ export class UserService {
           email,
         },
       });
-      console.log(`user in fetch user is ${user}`)
-      if(user)
-      return user;
-      else
-      throw new HttpException("no user found",HttpStatus.I_AM_A_TEAPOT)
+      if (user) return user;
+      else throw new HttpException('no user found', HttpStatus.I_AM_A_TEAPOT);
     } catch (error) {
       throw new HttpException(error, HttpStatus.I_AM_A_TEAPOT);
     }
   }
 
   async signup(dto: UserDto) {
-    console.log(`dto is ${dto}`)
-    const hash =dto.password.toString();
-    console.log("hello")
-    console.log(`dto is ${dto}`)
+    const hash = dto.password.toString();
     try {
       const user = await this.prisma.user.create({
         data: {
@@ -37,7 +31,6 @@ export class UserService {
           password: hash,
         },
       });
-      console.log(`created user is ${user}`)
       delete user.password;
       return user;
     } catch (error) {
