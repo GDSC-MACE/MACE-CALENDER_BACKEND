@@ -42,8 +42,10 @@ async function bootstrap() {
     origin: true,
     credentials: true,
   });
+
   const prismaService = app.get(PrismaService);
   await prismaService.$connect();
+
   await createSuperUser(prismaService);
 
   app.use(
@@ -54,6 +56,7 @@ async function bootstrap() {
       cookie: { maxAge: 3600000 },
     }),
   );
+
   app.use(passport.initialize());
   app.use(passport.session());
 

@@ -47,4 +47,14 @@ export class UserService {
       }
     }
   }
+
+  async fetchUsers() {
+    try {
+      const users = await this.prisma.user.findMany();
+      users.forEach((user) => delete user.password);
+      return users;
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  }
 }
