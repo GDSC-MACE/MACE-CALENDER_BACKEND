@@ -2,7 +2,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UseGuards } from '@nestjs/common/decorators/core/use-guards.decorator';
 import { Req } from '@nestjs/common/decorators/http/route-params.decorator';
-import { Roles } from 'src/auth/Decorators/roles.decorator';
+import { Roles } from 'src/auth/Decorators/Roles.decorator';
 import { AuthenticatedGuard } from 'src/auth/Guards/authenticated.guard';
 import { RolesGuard } from 'src/auth/Guards/roles.guard';
 import { Role } from 'src/auth/roles.enum';
